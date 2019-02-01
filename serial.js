@@ -4,7 +4,7 @@ const Readline = require('@serialport/parser-readline');
 async function getPort() {
     try {
         let portList = await SerialPort.list();
-        const port = portList.filter((port) => port.manufacturer == 'Prolific');
+        const port = portList.filter((port) => ((port.manufacturer) ? port.manufacturer.includes('Prolific') : false));
         return port[0].comName;
     } catch (err) {
         console.error('getPort, Error: ', err.message);
