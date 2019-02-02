@@ -1,5 +1,8 @@
 const SerialPort = require('serialport');
-const Readline = require('@serialport/parser-readline');
+const ReadLine = require('@serialport/parser-readline');
+
+const IS_ST = /(ST)/g;
+const IS_DATA = /([0-9]*[.])?[0-9]+/gm;
 
 async function getPort() {
     try {
@@ -24,8 +27,15 @@ module.exports = async (callback) => {
 
     port.on('error', console.error);
     
-    const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
-    parser.on('data', callback);
+    const parser = port.pipe(new ReadLine({ delimiter: '\r\n' }));
+    parser.on('data', (data) => {
+        let isMatchST = new RegExp(IS_ST);
 
-    port.on('close', console.log);
+        if(isMatchST.test(data)) {
+            let newData = data.match(IS_DATA);
+            return callback(newData.join(""));
+        }
+
+        return false;
+    });
 }
