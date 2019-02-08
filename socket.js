@@ -1,4 +1,6 @@
-const SERVER_SOCKET = "http://localhost:12695";
+const config = require('./config')(process.env.NODE_ENV);
+
+const SERVER_SOCKET = [config('socket_server'), config('socket_port')].join(':');
 const socket = require('socket.io-client');
 const { spawn } = require('child_process');
 const consoleSocket = socket.connect(SERVER_SOCKET);
