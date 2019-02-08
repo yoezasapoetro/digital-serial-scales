@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start-server": "node server.js",
+    "start-socket": "node socket.js",
+    "start-socket-dev": "nodemon socket.js",
+    "start-server-dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +16,7 @@
     "commander": "^2.19.0",
     "koa": "^2.7.0",
     "serialport": "^7.1.4",
+    "socket.io-client": "^2.2.0",
     "streaming-json-stringify": "^3.1.0"
   },
   "devDependencies": {
